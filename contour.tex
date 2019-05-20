@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+
+\usepackage{mathtools}
+
+\begin{document}
+$$
+\nabla f(x,y) 
+= 
+grad[f(x,y)]
+=
+\begin{bmatrix}
+g_x(x,y)\\
+g_y(x,y)
+\end{bmatrix}
+=
+\begin{bmatrix}
+\frac{\partial f(x,y)}
+{\partial x}\\
+\frac{\partial f(x,y)}
+{\partial y}
+\end{bmatrix}
+$$
+
+$$
+g_x(x,y) 
+= 
+\frac{\partial f(x,y)}
+{\partial x}
+=
+f(x+1,y) - f(x,y)
+$$
+
+$$
+g_y(x,y) 
+= 
+\frac{\partial f(x,y)}
+{\partial y}
+=
+f(x,y+1) - f(x,y)
+$$
+
+DEREVATIVE
+
+$$
+\begin{bmatrix}
+-1\\1
+\end{bmatrix}
+\quad
+\begin{bmatrix}
+-1 & 1
+\end{bmatrix}
+$$
+
+SOBEL
+
+$$
+\begin{bmatrix}
+ -1 & \,2 & -1 \\
+\,0 & \,0 &\,0 \\
+\,1 & \,2 &\,1
+\end{bmatrix}
+\quad
+\begin{bmatrix}
+-1 & 0 &  1 \\
+-2 & 0 &  2 \\
+-1 & 0 &  1
+\end{bmatrix}
+$$
+
+$$
+G 
+=
+\sqrt{G_x^2 + G_y^2}
+\quad
+G
+=
+|G_x| + |G_y|
+$$
+\end{document}

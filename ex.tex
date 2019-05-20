@@ -1,0 +1,349 @@
+\documentclass[12pt]{article}
+
+\usepackage{mathtools}
+
+
+\begin{document}
+FFT
+$$
+F(s) 
+\equiv
+{\int\limits_{-\infty}^{\infty}f(x)\,e^{-2\pi i s x}\,dx~}
+$$
+DFT
+$$
+f(x) 
+\equiv
+{\int\limits_{-\infty}^{\infty}F(s)\,e^{2\pi i s x}\,ds~}
+$$
+CONVOLUTION
+$$
+(f*g)(x)
+=
+{\int\limits_{-\infty}^{\infty} f(y)\,g(x-y)\,dy~} 
+=
+{\int\limits_{-\infty}^{\infty} f(x-y)\,g(y)\,dy~}  
+$$
+CORELATION
+$$
+(f \star g)(x) 
+= 
+{\int\limits_{-\infty}^{\infty} f(y)\,g(x+y)\,dy~} 
+= 
+{\int\limits_{-\infty}^{\infty} f(x+y)\,g(y)\,dy~}  
+$$
+CONVOLUTION THEOREM
+$$
+{(f*g)(x)}
+\Leftrightarrow 
+{(F \cdot G )(\xi)}
+$$
+$$
+{(f \cdot g)(x)}
+\Leftrightarrow 
+{(1/MN)(F*G )(\xi)}
+$$
+CORELATION THEOREM
+$$
+{(f \star g)(x)} 
+\Leftrightarrow
+{(\overline{F} \cdot G)(\xi)}
+$$
+$$
+{(\overline{f}  \cdot g)(x)} 
+\Leftrightarrow
+{(1/MN)(F \star G)(\xi)}
+$$
+IMPULSE
+
+$$
+\delta(t)=
+\begin{cases}
+\infty & t = 0 \\
+0	 & t \neq 0
+\end{cases}
+$$
+
+$$
+{\int\limits_{-\infty}^{\infty}\delta(t)\,dt~}
+=
+1
+$$
+
+IMPULSE PROPORTIES
+
+$$
+{\int\limits_{-\infty}^{\infty}f(t)\delta(t)\,dt~}
+=
+f(0)
+$$
+
+$$
+{\int\limits_{-\infty}^{\infty}f(t)\delta(t-t_{0})\,dt~}
+=
+f(t_{0})
+$$
+
+DISKRETE IMPULSE
+
+$$
+\delta(t)=
+\begin{cases}
+1 & t = 0 \\
+0	 & t \neq 0
+\end{cases}
+$$
+
+$$
+\sum_{t = - \infty}^{\infty} \delta(t) 
+=
+1
+$$
+
+$$
+\sum_{t = - \infty}^{\infty} f(t) 
+\delta(t - t_{0}) 
+=
+f(t_{0})
+$$
+
+$$
+s_{\varDelta T}(t) 
+=
+\sum_{k=-\infty}^{\infty}
+\delta(t - k\varDelta T)
+$$
+
+$$
+S(\mu) = \mathcal{F}
+\{ s_{\varDelta T}(t)  \}
+=
+\frac{1}{\varDelta T}
+\sum_{n = - \infty}^{\infty}
+\delta(
+\mu - \frac{n}{\varDelta T}
+)
+$$
+
+$$
+\tilde{f}(t) = 
+f(t)s_{\varDelta T}(t)
+=
+\sum_{n = -\infty}^{\infty}
+f(t)
+\delta(t - n\varDelta T)
+$$
+
+$$
+\tilde{F}(\mu) = 
+\frac{1}{\varDelta T}
+\sum_{n = - \infty}^{\infty}
+F(
+\mu - \frac{n}{\varDelta T}
+)
+$$
+
+$$
+F(\mu), [-\mu_{max},\mu_{max} ]
+$$
+
+$$
+\frac{1}{\varDelta T} 
+>
+2\mu_{max}
+$$
+
+$$
+F(\mu)
+=
+H(\mu)
+\tilde{F}(\mu)
+$$
+
+$$
+H(\mu)
+=
+\begin{cases}
+\varDelta T & 
+\mu \in [-\mu_{max},\mu_{max}] \\
+0 & otherwise
+\end{cases}
+$$
+
+$$
+h(t)
+=
+\mathcal{F}^{-1}\{H(\mu)\}(t)
+=
+\int\limits_{-\infty}^{\infty}
+H(\mu)
+e^{2\pi i \mu t }
+d\mu~
+=
+\int\limits_{-\mu_{max}}^{\mu_{max}}
+\varDelta T
+e^{2\pi i \mu t }
+d\mu~
+=
+$$
+$$
+=
+\frac{\varDelta T}
+{i 2 \pi t} 
+\left[
+e^{	2\pi i \mu t }
+\right]_{-\mu_{max}}^{\mu_{max}}
+=
+2\varDelta T \mu_{max}
+\frac{sin(2\pi t \mu_{max}) }{(2\pi t \mu_{max})}
+=
+2\varDelta T \mu_{max}
+sinc(2t\mu_{max})
+$$
+
+$$
+f(t)
+=
+\mathcal{F}^{-1}
+\{ F(\mu) \}
+$$
+$$
+=
+\mathcal{F}^{-1}
+\{
+H(\mu)\tilde{F}(\mu)
+\}
+$$
+$$
+=
+h(t)*\tilde{f}(t)
+$$
+
+$$
+f(t) 
+=
+2  \mu_{max} \varDelta T
+\sum_{ n = - \infty}^{\infty}
+f(n \varDelta T ) 
+sinc[ 2  \mu_{max}  (t - n \varDelta T) 	]  
+$$
+
+IF $   \varDelta T = \frac{1}{2 \mu_{max}}$
+$$
+f(t) 
+=
+\sum_{ n = - \infty}^{\infty}
+f(n \varDelta T ) 
+sinc[ (t - n \varDelta T) / \varDelta T	]  
+$$
+
+2D FFT
+
+$$
+F(\mu,\nu)
+=
+\int\limits_{-\infty}^{\infty}
+\int\limits_{-\infty}^{\infty}
+f(t,z) \,
+e^{-i 2 \pi( \mu t + \nu z)}
+dz dt~
+$$
+
+2D IFFT
+
+$$
+f(t,z)
+=
+\int\limits_{-\infty}^{\infty}
+\int\limits_{-\infty}^{\infty}
+F(\mu,\nu) \,
+e^{i 2 \pi( \mu t + \nu z)}
+d\mu d\nu~
+$$
+
+Train of impulses
+
+$$
+S_{ \varDelta T \varDelta Z }
+(t,z)
+=
+\sum_
+{ m = - \infty}^{\infty}
+\sum_
+{ n = - \infty}^{\infty}
+\delta(
+t - m \varDelta T,
+z - n \varDelta Z
+)
+$$
+
+Suggest that $
+[- \mu_{max},\mu_{max}] 
+\times
+[- \nu_{max},\nu_{max}] 
+$
+$$
+\varDelta T 
+<
+\frac{1}{2 \mu_{max}}
+$$
+$$
+\varDelta Z 
+<
+\frac{1}{2 \nu_{max}}
+$$
+
+$$
+\tilde{f}(t,z) 
+=
+f(t,z)
+S_{ \varDelta T \varDelta Z }
+=
+\sum_
+{ m =  0}^{M-1}
+\sum_
+{ n =  0}^{N-1}
+f(t,z)\delta(
+t - m \varDelta T,
+z - n \varDelta Z
+)
+$$
+
+where 
+$
+[-\frac{1}{2},
+\frac{1}{2}]
+\times
+[-\frac{1}{2},
+\frac{1}{2}]
+$
+
+DISKRET FFT
+$$
+F(\mu,\nu)
+=
+\sum_
+{ x =  0}^{M-1}
+\sum_
+{ y =  0}^{N-1}
+f(x,y)
+e^{
+-i2\pi(\mu x / M +
+ \nu y / N )
+}
+$$
+
+$$
+F(x,y)
+=
+\sum_
+{ \mu =  0}^{M-1}
+\sum_
+{ \nu =  0}^{N-1}
+f(\mu,\nu)
+e^{
+ i2\pi(\mu x / M +
+ \nu y / N )
+}
+$$
+\end{document}

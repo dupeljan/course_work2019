@@ -1,0 +1,124 @@
+\documentclass[12pt]{article}
+
+
+\usepackage{mathtools}
+
+
+\begin{document}
+
+Correlation  CV\_COMP\_CORREL
+ 
+$$
+d(H_1,H_2) 
+= 
+\frac{
+\sum_I(H_1(I) - \overline{H}_1)
+(H_2(I)-\overline{H}_2)
+}{
+	\sqrt{
+		\sum_I(H_1(I) - \overline{H}_1)^2
+		\sum_I(H_2(I) - \overline{H}_2)^2
+	}
+}
+$$
+
+$$
+\overline{H}_k 
+= 
+\frac{1}{N}
+\sum_J H_k(J)
+$$
+
+Chi-Square ( CV\_COMP\_CHISQR )
+$$
+d(H_1,H_2)
+=
+\sum_I \frac{
+	(H_1(I) - H_2(I))^2}
+{H_1(I)}
+$$
+
+Intersection ( method=CV\_COMP\_INTERSECT )
+
+$$
+d(H_1,H_2)
+=
+\sum_I 
+\min (H_1(I),H_2(I))
+$$
+
+Bhattacharyya distance ( CV\_COMP\_BHATTACHARYYA )
+$$
+d(H_1,H_2)
+=
+\sqrt{ 1 - 
+\frac{1}{
+  \sqrt{\overline{H}_1 
+  		\overline{H}_2
+  		N^2}
+  }
+  \sum_I
+  \sqrt{H_1(I) H_2(I)}
+}
+$$
+
+***
+ Template matching
+ 
+ method=CV\_TM\_SQDIFF
+
+$$
+R(x,y)
+=
+\sum_{x',y'}
+(T(x',y')-I(x+x',y+y'))^2
+$$ 
+
+method=CV\_TM\_SQDIFF\_NORMED
+
+$$
+R(x,y)
+=
+\frac{
+R(x,y)
+=
+\sum_{x',y'}
+(T(x',y')-I(x+x',y+y'))^2
+}
+{
+\sqrt{
+	\sum_{x',y'}
+	T(x',y')^2
+	\sum_{x',y'}
+	I(x+x',y+y')^2
+	}
+}
+$$
+
+method=CV\_TM\_CCORR
+
+$$
+R(x,y)
+=
+\sum_{x',y'}
+( T(x',y')I(x+x',y+y'))
+$$
+
+method=CV\_TM\_CCORR\_NORMED
+
+$$
+R(x,y)
+=
+\frac{
+	\sum_{x',y'}
+	( T(x',y')I(x+x',y+y'))
+}
+{
+	\sum_{x',y'}
+	T(x',y')^2
+	\sum_{x',y'}
+	I(x+x',y+y')^2
+}
+$$
+
+\end{document}
