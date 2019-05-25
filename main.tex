@@ -2,10 +2,13 @@
 
 %% my command
 %%%%%%%%%%%%%%
+% Путь к файлу с изображениями
 \newcommand{\picPath}{pictures}
-\newcommand{\indentSpace}{4\dimexpr \the\fontdimen2\font\space \relax }
+% Величина отступа
+\newcommand{\indentSpace}{1.25cm}
+% Сокращения
+\newcommand{\urlTitle}{ $-$ URL: }
 %%%%%%%%%%%%%%%
-
 
 
 % Изменяем шрифт
@@ -16,8 +19,12 @@
 % Полуторный интервал
 \linespread{1.6}
 
+% Отступ
+\setlength\parindent{\indentSpace}
+
 % Математика
 \usepackage{mathtools}
+
 
 % Картинки
 \usepackage{graphicx}
@@ -30,11 +37,21 @@
 \usepackage{tabularx}
 
 % Настройка подписей к фигурам
-\usepackage{caption}
-% Формат - по центру
-\captionsetup{justification=centering} 
+% Меняем заголовки картинок
+\usepackage[ labelsep= endash]{caption}
+\captionsetup{%
+   figurename= Рисунок,
+   tablename= Таблица,
+   justification= centering% Формат - по центру
+}         
 
-% Меняем класс enumerate,
+% Кирилица в подфигурах
+\renewcommand{\thesubfigure}{\asbuk{subfigure}}
+% разделитель в подфигурах - правая скобка
+\DeclareCaptionLabelSeparator{r_paranthesis}{)\quad }
+\captionsetup[subfigure]{labelformat=simple, labelsep=r_paranthesis}
+
+% Добавляем итератор \asbuk,
 % чтобы использовать кирилицу
 % как маркеры
 \usepackage{enumitem}
@@ -42,7 +59,33 @@
 \AddEnumerateCounter{\asbuk}{\russian@alph}{щ}
 \makeatother
 
-% Работа с отступами
+% Меняем маркеры в перечислениях
+% Списки уровня 1
+\setlist[enumerate,1]{label=\arabic*),ref=\arabic*}
+% Списки уровня 2
+\setlist[enumerate,2]{label=\asbuk*),ref=\asbuk*}
+% Перечисления
+\setlist[itemize,1]{label=$-$}
+% Удаляем отступы перед и после
+% списка
+\setlist[itemize]{noitemsep, topsep=0pt}
+\setlist[enumerate]{noitemsep, topsep=0pt}
+
+
+% Красная строка в начале главы
+\usepackage{indentfirst}
+
+% Убиваем перенос
+\usepackage[none]{hyphenat}
+
+% Перенос длинных ссылок
+\usepackage[hyphens]{url}
+\urlstyle{same}
+
+% Выравнивание по ширине
+\usepackage{microtype}
+
+% Границы
 \usepackage{vmargin}
 \setpapersize{A4}
 % отступы
@@ -54,29 +97,28 @@
 %{0pt}{0mm} % Высота - отступ верхнего колонтитула
 %{0pt}{0mm} % Высота - отступ нижнего  колонтитула
 
-% Красная строка в начале главы
-\usepackage{indentfirst}
-
-% Убиваем перенос
-\usepackage[none]{hyphenat}
-
-% выравнивание по ширине
-\usepackage{microtype}
-
-% Границы
 \setlength\hoffset{0cm}
 \setlength\voffset{0cm}
 \usepackage[top=2cm, bottom=2cm, left=3cm, right=2cm,
 ]{geometry}
  		
-% Настройка заглавия содержания
+% Настройка заглавиий
 \addto\captionsrussian{% Replace "english" with the language you use
-  \renewcommand{\contentsname}%
-    {ОГЛАВЛЕНИЕ}%
+  \renewcommand{\contentsname}% содержания
+    {\hfill\bfseries
+    СОДЕРЖАНИЕ
+	\hfill    
+    }%
+   \renewcommand{\bibname}% списка источников
+    {\hfill\bfseries
+    	СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ
+	\hfill
+	}% 
 }%\
-\renewcommand{\tableofcontents}{\paragraph*{\contentsname}\@starttoc{toc}}	
 
-% Настройка  заглавий
+%\renewcommand{\contentsname}{\hfill\bfseries СОДЕРЖАНИЕ \hfill} 
+
+% Настройка  заглавий в главах
 \usepackage{titlesec}
 
 
@@ -98,12 +140,14 @@
 
 \titleformat{\chapter}
             {\bfseries}
-            {\hspace{\indentSpace}\thechapter.\hspace{1em}}
+            {\hspace{\indentSpace}\thechapter\hspace{1em}}
             {0pt}
             {
             \vspace{0mm} }
             [\vspace{14pt}]% Отступ после
-\titlespacing{\chapter}{0pt}{-0pt}{0pt}
+% Начальный сдвиг заголовка 50 pt = 1.763888888cm.
+% Второй параметр- сдвиг до = 2cm - 50pt
+\titlespacing{\chapter}{0pt}{-0.2361cm}{0pt}
 
 \titleformat{\section}
 {\bfseries}{\hspace{\indentSpace}\thesection}{1em}{}
@@ -123,25 +167,28 @@
 \makeatletter
 \renewcommand*{\@biblabel}[1]{\hfill#1}
 \makeatother
-% веелечина отступа
-\setlength\parindent{\indentSpace}
+
 
 % Добавить точки в оглавление
 \usepackage{tocstyle}
 \newcommand{\autodot}{.}
 
+% Чтобы картинки вставляись
+% куда надо
+\usepackage{float}
 
+% Режим релиза
 \sloppy
 \usepackage{layout}
 
 \begin{document}
-
+Статистический анализ текстовой информации вебинаров
+\newpage
 \tableofcontents
 \newpage
 \begin{center}
 \bfseries Введение
 \end{center}
-%\chapter*{Введение}
 \addcontentsline{toc}{chapter}{Введение}
 
 	В Сибирском государственном университете телекоммуникаций и информатики,с которым у КубГУ имеется соглашение о сотрудничестве в сфере образования, науки, научной и инновационной деятельности стоит задача оценивания
@@ -150,20 +197,17 @@
 Для решения этой задачи разработана математическая модель, которая включает систему из 32 показателей качества организации и проведения вебинара (перечень которых представлен в приложении), позволяющих оценить с разных сторон  качество вебинара 10-балльными экспертными оценками. Проблема заключается в существенных трудозатратах, которые несут эксперты при оценивании этих показателей. Кроме того, мнения экспертов субъективны, а задача поставлена максимально объективизировать процедуру оценивания, например, за счет минимизации влияния человеческого фактора в процедуре оценивания. В связи с этим актуальной является  задача разработки такой компьютерной технологии, которая позволит оценить максимальное количество показателей без участия человека в автоматическом режиме. В числе показателей, которые могут быть автоматически при помощи некоторого алгоритма входят: колличество и качество информации на слайдах, использование указки, точность заявленной длительности мероприяти и тд.
 
 Основой для анализа данных показателей является три основных аспекта:
-%\begin{enumerate}[label=\asbuk*),ref=\asbuk*, noitemsep]
-\begin{itemize}[label= $-$, noitemsep]
-\item поиск указки
-\item выделение слайдов
-\item Распознавание блоков текста на слайдах
-\end{itemize}
-%\end{enumerate}
- 
+\begin{itemize}
+\item поиск указки;
+\item выделение слайдов;
+\item распознавание блоков текста на слайдах.
+\end{itemize} 
 Для решения данных задач в ходе курсовой работы были рассмотрены алгоритмы поиска границ обектов на изображении, сравнения двух изображений, поиска шаблона в изображении, а также методы локализации текста среди прочих объектов. Кроме того, изучены методы, которые позволяют значительно ускорить работу всех вышеперечисленных алгоритмов. Програмно было реализованны процедуры, реализующие основу для дальнейшего развития приложения автоматического вычисления некоторых показателей вебинаров. 
 
 \chapter{Методы определения границ объектов на изображении}
 Границы объектов на изображении характеризуются изменением яркости в некотором направлении. Выделяют три вида границ: идеальные,  размытые  и крышевидные. На рис № изображены вертикальные границы трех видов.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
   \begin{subfigure}[b]{0.4\linewidth}
     \includegraphics[width=\linewidth]{\picPath/perfect.png}
@@ -177,7 +221,7 @@
     \includegraphics[width=\linewidth]{\picPath/roof.png}
     \caption{Крышевидная граница}
   \end{subfigure}
-  \caption{Границы объектов: изображение, функция яркости, первая и вторая производные.}
+  \caption{границы объектов: изображение, функция яркости, первая и вторая производные}
   \label{fig:coffee}
 \end{figure}
 
@@ -319,7 +363,14 @@ d(H_1,H_2)
 $$
 
 где $I$ в общем случае вектор, сумма идет по всем возможным векторам.
-\begin{figure}[h!]
+
+
+Плюс данного метода - инвариантность относительно формы и размера сравниваемых изображений.
+
+Главный недостаток метода сравнения гистограмм -   разделение изображений весьма условно. Каждому изображению подобно всё множество изображений, составленных из тех же пикселей, расположенных в произвольном порядке. Поэтому данный метод не подходит, например,  для задачи поиска курсора т.к. существует вероятность того, что на изображении, кроме курсора, могут находиться элементы, гистограммы которых очень близки к гистограмме курсора.   
+
+\begin{figure}[H]
+\begin{center}
 \begin{subfigure}[b]{0.2\linewidth}
     	\includegraphics[width=\linewidth]{\picPath/girl.jpg}
     	\caption{ girl.jpg}
@@ -332,6 +383,12 @@ $$
     	\includegraphics[width=\linewidth]{\picPath/wood.jpg}
     	\caption{ wood.jpg}
   \end{subfigure}
+\end{center}
+  \caption{изображения, используемые в сравнительном тесте  }
+\end{figure}
+
+\begin{table}[H] 
+\caption{cравнение результатов сравнения изображений по гистограмме}
 \begin{tabularx}{\textwidth}{|X|X|X|X|X|}
 \hline
  & 
@@ -389,15 +446,7 @@ CV\_\allowbreak COMP\_\allowbreak BHATTA\allowbreak CHARYYA
 \\
 \hline
 \end{tabularx}
-	
-  
-\caption{Сравнение результатов сравнения изображений по гистограмме}
-\label{correlation_table}
-\end{figure}
-
-Плюс данного метода - инвариантность относительно формы и размера сравниваемых изображений.
-
-Главный недостаток метода сравнения гистограмм -   разделение изображений весьма условно. Каждому изображению подобно всё множество изображений, составленных из тех же пикселей, расположенных в произвольном порядке. Поэтому данный метод не подходит, например,  для задачи поиска курсора т.к. существует вероятность того, что на изображении, кроме курсора, могут находиться элементы, гистограммы которых очень близки к гистограмме курсора.   
+\end{table}
 
 \section{Совпадения по шаблону}
 Данный класс методов используется для нахождения координат малого шаблонного изображения в большом. Алгоритм поиска:
@@ -461,9 +510,9 @@ $$
 
 На втором этапе полученная двумерная матрица нормируется, и в зависимости от используемого метода находится её минимальный или максимальный элемент.
 
-\begin{figure}[h!]
+\begin{figure}[H]
   \centering
-  \begin{subfigure}[b]{0.09\linewidth}
+  \begin{subfigure}[b]{0.2\linewidth}
     \includegraphics[width=\linewidth]{\picPath/cursor.png}
     \caption{ Курсор}
   \end{subfigure}
@@ -479,7 +528,7 @@ $$
     \includegraphics[width=\linewidth]{\picPath/templ_matching_result.png}
     \caption{На исходном изображении локализован курсор}
   \end{subfigure}
-  \caption{Пример работы алгоритма поиска изображения по шаблону}
+  \caption{пример работы алгоритма поиска изображения по шаблону}
   \label{fig:coffee}
 \end{figure}
 
@@ -743,7 +792,7 @@ f(n \varDelta T )
 sinc[ (t - n \varDelta T) / \varDelta T	]  
 \end{equation}
 
-Данный вывод называется \textbf{теоремой Котельникова или сэмплирования.} 
+Данный вывод называется \textit{теоремой Котельникова или сэмплирования.} 
 Этот подход широко используется в обработке изображений и звука. Например зная, что человек слышит звуки частоты от 16 до 20 000 Гц можно без какой-либо потери информации для человеческого слуха записывать звуки с частотой дискретизации 44100 Гц.
 
 \section{Двумерное преобразование Фурье}
@@ -924,8 +973,12 @@ f(x,y) - \overline{f}_{u,v}
 В знаменателе второе слагаемое всегда константа. Первое слагаемое можно вычислить, используя только $3M^2$   вместо $3N^2(M-N+1)$ операций, если использовать подход бегущей суммы ( интегрирование изображений ). 
 Сравнивая методы поиска шаблона можно заметить, что методы быстрой кросс корелляции рабоатет на порядок быстрее алгоритмов, не использующих преобразование Фурье. 
 
-\begin{figure}
+Данный алгоритм был разработан специально для фильма “Форест Гамп”(1994) и использовался в большом количестве других проектов. Во время производства фильма было необходимо вырезать и заменить некоторые части изображения из видеопотока. Шаблон вручную выделялся, а после автоматически отслеживался на протяжении всей сцены посредством ускоренной нкк. Найденные координаты использовались для дальнейших спецэффектов.
 
+\begin{table}[H]
+\caption{
+сравнения времени работы алгоритма н.к.к.  и ускоренной н.к.к. Тест предполагал нахождение координат шаблона в кадрах из фильма “Форест Гамп”
+}
 \begin{tabularx}{\textwidth}{|X|X|X|X|}
 \hline
 Размер шаблона
@@ -945,43 +998,38 @@ $	 115\times 200 \newline 150 \times 150 $
 \\
 \hline
 \end{tabularx}
-\caption{
-Таблица сравнения времени работы алгоритма н.к.к.  и ускоренной н.к.к. Тест предполагал нахождение координат шаблона в кадрах из фильма “Форест Гамп”
-}
-\end{figure}
-
-Данный алгоритм был разработан специально для фильма “Форест Гамп”(1994) и использовался в большом количестве других проектов. Во время производства фильма было необходимо вырезать и заменить некоторые части изображения из видеопотока. Шаблон вручную выделялся, а после автоматически отслеживался на протяжении всей сцены посредством ускоренной нкк. Найденные координаты использовались для дальнейших спецэффектов.
+\end{table}
 
 \chapter{Методы локализации текста на изображении}
 Проблема распознавания текстовых изображений появилась давно \cite{JDAR_survey}. Системы распознавания текста из изображения (Optical Character Recognition) нашли своё применеия во многих отраслях жизни:
 
-\begin{itemize}[label= $-$, noitemsep]
-\item Чтение регистрационных знаков транспортных средсв
-\item Определение и чтение дорожных знаков
+\begin{itemize}
+\item чтение регистрационных знаков транспортных средсв;
+\item определение и чтение дорожных знаков;
 
-\item Мобильное приложение для слабовидящих, распознающее и проговаривающее текст из изображения
+\item мобильное приложение для слабовидящих, распознающее и проговаривающее текст из изображения;
 
-\item Ввод информации
+\item ввод информации;
 
-\item Оцифровка или архивация документов, видеопотока с камеры наблюдения и тд
+\item оцифровка или архивация документов, видеопотока с камеры наблюдения и тд.
 
 \end{itemize}
 
 На сегодняшний день алгоритмы локализации текста развиты достаточно хорошо. Тем не менее, они не могут дать абсолютно точный результат т.к. входные данные могут быть подвержены искажениям. Основные из них
 
-\begin{itemize}[label= $-$, noitemsep]
-\item Низкое разрешение 
+\begin{itemize}
+\item низкое разрешение; 
 
 
-\item Неравномерное освещение
+\item неравномерное освещение;
 
-\item Георметрические искажения
+\item георметрические искажения;
 
-\item Дисторсия
+\item дисторсия;
 
-\item Сложный фон
+\item сложный фон;
 
-\item Шумы итд.
+\item шумы итд.
 
 \end{itemize}
 
@@ -1037,32 +1085,32 @@ Kim et al.\cite{Kim:text_loc} также представил градиенты
 
 Алгоритм:
 
-\begin{enumerate}
-\item На вход два изображения $x, y$
-\item Если отношение max( ширина $x$, ширина $y$) / min ( ширина $x$, ширина $y$) > $1.5$ или max( длина $x$, длина $y$) / min ( длина $x$, длина $y$) > $1.5$ - то изображения разные, вернуть $0$
-\item Если  max ( кол-во не черных пикселей $x$,  кол-во не черных пикселей $y$ ) / min ( кол-во не черных пикселей $x$,  кол-во не черных пикселей $y$ ) > $10$ - изображения разные, вернуть $0$
-\item Вычислить относительное положение: 
+\begin{enumerate}%[label=\arabic*),ref=\arabic*]
+\item на вход два изображения $x, y$;
+\item если отношение max( ширина $x$, ширина $y$) / min ( ширина $x$, ширина $y$) > $1.5$ или max( длина $x$, длина $y$) / min ( длина $x$, длина $y$) > $1.5$ - то изображения разные, вернуть $0$;
+\item если  max ( кол-во не черных пикселей $x$,  кол-во не черных пикселей $y$ ) / min ( кол-во не черных пикселей $x$,  кол-во не черных пикселей $y$ ) > $10$ - изображения разные, вернуть $0$;
+\item вычислить относительное положение: 
 
-\begin{enumerate}
-\item $x$ мб полностью  вложен в $y$
-\item $y$ мб полностью вложен в $x$
-\item $x$ нельзя вложить в $y$ и $y$ нельзя вложить в  $x$
+\begin{enumerate}%[label=\asbuk*),ref=\asbuk*]
+\item $x$ мб полностью  вложен в $y$;
+\item $y$ мб полностью вложен в $x$;
+\item $x$ нельзя вложить в $y$ и $y$ нельзя вложить в  $x$;
 \end{enumerate}
 
-\item Если $b$ - swap($x$,$y$)
-\item Если $c$ - добавить к элементу $y$ белую границу справа на ширину $x$, снизу на длину $x$
-\item С помощью бинаризации вычисляем маску для $x$
-\item Используя метод совпадения по шаблону с метрикой TM\_CCORR\_NORMED найти координаты наиболее похожего на $x$ окна в $y$
-\item Сравнить $x$ и полученное на предыдущем этапе окно из $y$ методом совпадения по шаблону с метрикой TM\_SQDIFF
-\item Полученная маска размером $1 \times 1$ есть квадрат разности между яркостями пислей изображения, вернуть $1$ - яркость пикселя маски / $255$.
+\item если $b$ - swap($x$,$y$);
+\item если $c$ - добавить к элементу $y$ белую границу справа на ширину $x$, снизу на длину $x$
+\item с помощью бинаризации вычисляем маску для $x$
+\item используя метод совпадения по шаблону с метрикой TM\_CCORR\_NORMED найти координаты наиболее похожего на $x$ окна в $y$
+\item сравнить $x$ и полученное на предыдущем этапе окно из $y$ методом совпадения по шаблону с метрикой TM\_SQDIFF
+\item полученная маска размером $1 \times 1$ есть квадрат разности между яркостями пислей изображения, вернуть $1$ - яркость пикселя маски / $255$.
 \end{enumerate}
 
 \section{Алгоритм поиска курсора}
 Курсор можно определить как изображение, постоянно или почти постоянно находящееся в видео потоке, меняющее свое положение и не меняющее форму. Для поиска курсора и хранения изображения удобно использовать класс, реализующий, кроме поиска курсора, ряд вспомогательных функций
 
 \begin{enumerate}
-\item Процедура очистки чб изображения разности кадров от шумов.
-\item Процедура поиска границ областей в изображении.
+\item процедура очистки чб изображения разности кадров от шумов;
+\item процедура поиска границ областей в изображении.
 \end{enumerate}
 
 Кроме этого, используется процедура сдвига  видеопотока на величину shift и вычисления разности между текущим кадром и кадром, считанным до сдвига.
@@ -1071,45 +1119,45 @@ Kim et al.\cite{Kim:text_loc} также представил градиенты
 Алгоритм поиска курсора
 
 \begin{enumerate}
-\item На вход дан видеопоток
-\item Вычислить  разность между кадрами
-\item Сохранить кадр до свига видеопотока как текущий слайд
-\item Сгенерировать маску курсора для текущего слайда
-\item Пока маска не черная и количество не черных элементов разности меньше, чем 3 площади изображения курсора
+\item на вход дан видеопоток;
+\item вычислить  разность между кадрами;
+\item сохранить кадр до свига видеопотока как текущий слайд;
+\item сгенерировать маску курсора для текущего слайда;
+\item пока маска не черная и количество не черных элементов разности меньше, чем 3 площади изображения курсора;
 \begin{enumerate}
-	\item Вычислить разницу между кадрами
-	\item Для текущего кадра вычислить маску курсора
-	\item Вычислить маску для заполнения как маска кадра минус ( маска кадра пересечение маска текущего слайда )
-	\item Вычислить новое значение маски слайда как пересечение маски слайда с текущей маской.
-	\item Из текущего слайда вырезать кусок по маске для заполнения и вставить в изображение текущего слайда.
+	\item вычислить разницу между кадрами;
+	\item для текущего кадра вычислить маску курсора;
+	\item вычислить маску для заполнения как маска кадра минус ( маска кадра пересечение маска текущего слайда );
+	\item вычислить новое значение маски слайда как пересечение маски слайда с текущей маской;
+	\item из текущего слайда вырезать кусок по маске для заполнения и вставить в изображение текущего слайда;
 \end{enumerate}
-\item Пока количество не черных элементов разности меньше, чем 3 площади изображения курсора вычислить разницу между кадрами
-\item Сохранить текущий слайд в памяти
+\item пока количество не черных элементов разности меньше, чем 3 площади изображения курсора вычислить разницу между кадрами;
+\item сохранить текущий слайд в памяти.
 \end{enumerate}
 
 \section{Алгоритм генерации слайда}
 Алгоритм не только вырезает слайды из видеопотока, но и пытается вырезать изображение курсора там, где это возможно.
 \begin{enumerate}
-\item На вход дано изображение слайда
-\item Размыть изображение по Гаусу с ядром $3*3$
-\item Бинаризовать изображение с порогом 180
-\item Изменить изображение посредством морфологической операции эрозия с прямоугольным ядром 1 * предполагаемая минимальная высота буквы. 
-\item Отфильтровать изображение с ядром  
+\item на вход дано изображение слайда;
+\item размыть изображение по Гаусу с ядром $3*3$;
+\item бинаризовать изображение с порогом 180;
+\item изменить изображение посредством морфологической операции эрозия с прямоугольным ядром 1 * предполагаемая минимальная высота буквы. 
+\item отфильтровать изображение с ядром  
 $\begin{bmatrix}
  -1 & \,2 & -1 \\
 \,0 & \,0 &\,0 \\
 \,1 & \,2 &\,1
 \end{bmatrix}$,для выделения левых границ объектов изображения
-\item Отфильтровать изображение с ядром 
+\item отфильтровать изображение с ядром 
 $\begin{bmatrix}
 -1 & 0 &  1 \\
 -2 & 0 &  2 \\
 -1 & 0 &  1
-\end{bmatrix}$ для выделения правых границ объектов изображения
-\item Наложить оба отфильтрованных изображения одно на другое 
-\item Посредством морфологических операций оставить только те прямоугольные области ширины 1, длина которых  входит в допустимый отрезок
-\item Посредством морфологических операций объединить полученные области в предполагаемые текстовые блоки.
-\item Определить прямоугольные контуры вокруг предполагаемых текстовых блоков
+\end{bmatrix}$ для выделения правых границ объектов изображения;
+\item наложить оба отфильтрованных изображения одно на другое;
+\item посредством морфологических операций оставить только те прямоугольные области ширины 1, длина которых  входит в допустимый отрезок;
+\item Посредством морфологических операций объединить полученные области в предполагаемые текстовые блоки;
+\item Определить прямоугольные контуры вокруг предполагаемых текстовых блоков;
 \item Отфильтровать полученные контуры удалив те, которые по тем или иным причинам быть не могут контуром текстового блока.
 \end{enumerate}
 
@@ -1154,28 +1202,64 @@ pitch). Сначала в полигонах определяются вогну
 \newpage
 %список литературы
 \begin{thebibliography}{0}
-\bibitem{Smith:Tesseract}           
-An Overview of the Tesseract OCR Engine ﻿Ray Smith
-https://static.googleusercontent.com/media/research.google.com/ru//pubs/archive/33418.pdf
-\bibitem {Digital_proc}Эмануил Айфичер Цифровая обработка сигналов
-\bibitem {Gonzalez} Processing digital Image 4 F O U RT H E D I T I O N Rafael C. Gonzalez Richard E. Woods
-\bibitem {Cross-Correlation} Fast Normalized Cross-Correlation J. P. Lewis1 Industrial Light \& Magic
-\bibitem {JDAR_survey}JDAR (2005)
-﻿Camera-based analysis of text and documents: a survey
-Jian Liang, David Doermann, Huiping Li
-\bibitem{Dup:cousache} Моя курсовая
-\bibitem{Lee:text_loc}Lee C-M, Kankanhalli A (1995) Automatic extractionof characters in complex scene images. Int J PatternRecog Artif Intell 9(1):67–82
-\bibitem {Kuwano:text_loc}Kuwano H, Taniguchi Y, Arai H, Mori M, Kurakake S,Kojima H (2000) Telop-on-demand: video structuringand retrieval based on text recognition. In: Proc. IEEEICME, New York, pp 759–762
-\bibitem{Wong:text_loc} Wong EK, Chen M-Y () A robust algorithm for textextraction in color video. In: Proc. IEEE internationalconference on multimedia and expo, pp 797–800
+
+\bibitem{Smith:Tesseract}           	
+﻿Ray Smith. An Overview of the Tesseract OCR Engine \urlTitle
+\url{https://static.googleusercontent.com/media/research.google.com/ru//pubs/archive/33418.pdf} (12.03.2019)
+%\bibitem {Digital_proc}Эмануил Айфичер Цифровая обработка сигналов
+
+\bibitem {Gonzalez}
+ Rafael C. Gonzalez, Richard E. Woods. Processing digital Image 4 global edition $-$ M: Pearson, 2017. $-$ 993с. 
+
+\bibitem {Cross-Correlation} 
+J. P. Lewis. Fast Normalized Cross-Correlation 
+\urlTitle \url{http://scribblethink.org/Work/nvisionInterface/nip.html} (12.03.2019)
+
+\bibitem {JDAR_survey}
+﻿Jian Liang, David Doermann, Huiping Li. Camera-based analysis of text and documents: a survey. \urlTitle \url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.94.9236&rep=rep1&type=pdf} (12.03.2019)
+
+
+\bibitem{Dup:cousache}
+ Моя курсовая
+
+\bibitem{Lee:text_loc}
+Lee C-M, Kankanhalli A (1995) Automatic extractionof characters in complex scene images. Int J PatternRecog Artif Intell 9(1):67–82
+
+\bibitem {Kuwano:text_loc}
+Kuwano H, Taniguchi Y, Arai H, Mori M, Kurakake S,Kojima H (2000) Telop-on-demand: video structuringand retrieval based on text recognition. In: Proc. IEEEICME, New York, pp 759–762
+
+\bibitem{Wong:text_loc}
+Wong EK, Chen M-Y () A robust algorithm for textextraction in color video. In: Proc. IEEE internationalconference on multimedia and expo, pp 797–800
+
 \bibitem{Zunino:text_loc} Zunino R, Rovetta S (2000) Vector quantization forlicense-plate location and image coding. IEEE TransIndust Electr 47(1):159–167
-\bibitem{Kim:text_loc}Kim S, Kim D, Ryu Y, Kim G (2002) A robust license-plate extraction method under complex image condi-tions. In: Proc. ICPR, pp 216–219
-\bibitem{Hua:text_loc} Hua X-S, Chen X-R, Liu W-Y, Zhang H-J (2001) Auto-matic location of text in video frames. In: Proc. ACMworkshop on multimedia: multimedia information re-trieval, pp 24–27
-\bibitem{Miene:text_loc}Miene A, Hermes Th, Ioannidis G (2001) Extractingtextual inserts from digital videos. In: Proc. ICDAR,pp 1079–1083
-\bibitem {Li:text_loc}Li C, Ding X-Q, Wu Y-S (2001) Automatic text lo-cation  in  natural  scene  images.  In:  Proc.  ICDAR,pp 1069–1073
-\bibitem{Zhong:loc_text0}  Zhong Y, Karu K, Jain AK (1995) Locating text incomplex color images. In: Proc. ICDAR, pp 146–149﻿
-\bibitem{Zhong:loc_text1}  Zhong Y, Zhang H, Jain AK (2000) Automatic captionlocalization in compressed video. IEEE Trans PatternAnal Mach Intell 22(4):385–392
-\bibitem {Wu:text_loc0}Wu V, Manmatha R, Riseman EM (1997) Finding textin images. In: Proc. 2nd ACM international conferenceon digital libraries, pp 3–12
-\bibitem{Wu:text_loc1}  Wu V, Manmatha R, Riseman EM (1999) TextFinder:an  automatic  system  to  detect  and  recognize  textin  images.  IEEE  Trans  Pattern  Anal  Mach  Intell21(11):1124–1129
-\bibitem{Jung:text_loc} Jung K, Kim KI, Han J-H (2002) Text extraction inreal scene images on planar planes. In: Proc. ICPR,pp 469–472
+
+\bibitem{Kim:text_loc}
+Kim S, Kim D, Ryu Y, Kim G (2002) A robust license-plate extraction method under complex image condi-tions. In: Proc. ICPR, pp 216–219
+
+\bibitem{Hua:text_loc}
+ Hua X-S, Chen X-R, Liu W-Y, Zhang H-J (2001) Auto-matic location of text in video frames. In: Proc. ACMworkshop on multimedia: multimedia information re-trieval, pp 24–27
+
+\bibitem{Miene:text_loc}
+Miene A, Hermes Th, Ioannidis G (2001) Extractingtextual inserts from digital videos. In: Proc. ICDAR,pp 1079–1083
+
+\bibitem {Li:text_loc}
+Li C, Ding X-Q, Wu Y-S (2001) Automatic text lo-cation  in  natural  scene  images.  In:  Proc.  ICDAR,pp 1069–1073
+
+\bibitem{Zhong:loc_text0} 
+Zhong Y, Karu K, Jain AK (1995) Locating text incomplex color images. In: Proc. ICDAR, pp 146–149﻿
+
+\bibitem{Zhong:loc_text1}
+Zhong Y, Zhang H, Jain AK (2000) Automatic captionlocalization in compressed video. IEEE Trans PatternAnal Mach Intell 
+22(4):385–392
+
+\bibitem {Wu:text_loc0}
+Wu V, Manmatha R, Riseman EM (1997) Finding textin images. In: Proc. 2nd ACM international conferenceon digital libraries, pp 3–12
+
+\bibitem{Wu:text_loc1}
+Wu V, Manmatha R, Riseman EM (1999) TextFinder:an  automatic  system  to  detect  and  recognize  textin  images.  IEEE  Trans  Pattern  Anal  Mach  Intell21(11):1124–1129
+
+\bibitem{Jung:text_loc}
+Jung K, Kim KI, Han J-H (2002) Text extraction inreal scene images on planar planes. In: Proc. ICPR,pp 469–472
+
 \end{thebibliography}
 \end{document} 
