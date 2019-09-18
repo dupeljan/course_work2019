@@ -8,7 +8,7 @@
 4) Простота редактирования математических формул
 5) Мощный функционал, обширное комьюнити
 # Как привести свою курсовую работу к нормальному виду, используя этот шаблон?
-1) Установить [XeLaTex](http://www.texts.io/download/)
+1) Установить [mikTex](https://miktex.org/download)
 2) Установить [TexMaker](http://www.xm1math.net/texmaker/download.html)
 3) Скачать и открыть TexMakerом файл [main.tex](https://github.com/dupeljan/course_work2019/blob/master/main.tex)
 4) Вставить свой текст, таблицы и картинки в шаблон
